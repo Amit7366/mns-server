@@ -76,11 +76,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5000',
   'http://localhost:5173',
-  'http://37.44.244.251',
-  'https://bm24api.xyz',
-  'https://sbm777.com',
-  'https://sbm777.vercel.app',
-  'https://txserver.site',
+  'https://mns-client.vercel.app',
 ];
 const corsOptions = {
   origin: (origin: string | undefined, callback: (err: Error | null, ok?: boolean) => void) => {
