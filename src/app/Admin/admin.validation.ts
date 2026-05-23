@@ -1,0 +1,74 @@
+import { z } from 'zod';
+import { BloodGroup, Gender } from './admin.constant';
+
+const createUserNameValidationSchema = z.object({
+  firstName: z.string().min(1).max(20),
+  middleName: z.string().max(20),
+  lastName: z.string().max(20),
+});
+
+export const createAdminValidationSchema = z.object({
+  body: z.object({
+    password: z.string().max(20).optional(),
+    admin: z.object({
+      designation: z.string(),
+      name: createUserNameValidationSchema,
+      userName: z.string().min(1).max(40),
+      gender: z.enum([...Gender] as [string, ...string[]]),
+      dateOfBirth: z.string().optional(),
+      email: z.string().email(),
+      contactNo: z.string(),
+      emergencyContactNo: z.string(),
+      bloodGroup: z.enum([...BloodGroup] as [string, ...string[]]),
+      presentAddress: z.string(),
+      permanentAddress: z.string(),
+      // profileImg: z.string(),
+    }),
+  }),
+});
+
+const updateUserNameValidationSchema = z.object({
+  firstName: z.string().min(3).max(20).optional(),
+  lastName: z.string().min(3).max(20).optional(),
+});
+
+export const updateAdminValidationSchema = z.object({
+  body: z.object({
+    admin: z.object({
+      name: updateUserNameValidationSchema,
+      designation: z.string().max(30).optional(),
+      userName: z.string().optional(),
+      gender: z.enum([...Gender] as [string, ...string[]]).optional(),
+      dateOfBirth: z.string().optional(),
+      email: z.string().email().optional(),
+      contactNo: z.string().optional(),
+      emergencyContactNo: z.string().optional(),
+      bloodGroup: z.enum([...BloodGroup] as [string, ...string[]]).optional(),
+      presentAddress: z.string().optional(),
+      permanentAddress: z.string().optional(),
+      // profileImg: z.string().optional(),
+    }),
+  }),
+});
+ export const giveSignupBonusValidation = z.object({
+  body: z.object({
+    bonusAmount: z.number().min(1).max(10000, 'Max 10000 TK allowed'),
+  }),
+});
+export const updateUserStatusValidation = z.object({
+  body: z.object({
+    status: z.enum(['active', 'frozen', 'deactivated', 'pending']),
+  }),
+});
+export const assignCustomerOfficerValidation = z.object({
+  body: z.object({
+    officerId: z.string().min(1, 'officerId is required'),
+  }),
+});
+export const AdminValidations = {
+  createAdminValidationSchema,
+  updateAdminValidationSchema,
+  giveSignupBonusValidation,
+  updateUserStatusValidation,
+
+};
