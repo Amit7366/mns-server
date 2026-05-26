@@ -41,9 +41,11 @@ app.use(
         connectSrc: [
           "'self'",
           'https://www.google-analytics.com',
+          'https://bkbajiapi.xyz',
           'https://bm24api.xyz',
           'https://sbm777.com',
           'https://sbm777.vercel.app',
+          'wss://bkbajiapi.xyz',
           'wss://bm24api.xyz',
           'wss://sbm777.com',
         ],
@@ -72,11 +74,19 @@ app.use(
 );
 
 /** CORS for the rest (callback already responded earlier) */
+const corsFromEnv = (process.env.CORS_ORIGINS ?? '')
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
 const allowedOrigins = [
   'http://localhost:3000',
+  'http://localhost:3002',
   'http://localhost:5000',
   'http://localhost:5173',
   'https://mns-client.vercel.app',
+  'https://bkbaji.com',
+  'https://www.bkbaji.com',
+  ...corsFromEnv,
 ];
 const corsOptions = {
   origin: (origin: string | undefined, callback: (err: Error | null, ok?: boolean) => void) => {
