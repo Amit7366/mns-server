@@ -106,6 +106,17 @@ const updateNormalUserIntoDB = async (
     }
   );
 
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Normal user not found');
+  }
+
+  if (payload.email !== undefined || payload.dateOfBirth !== undefined) {
+    const userPatch: Record<string, unknown> = {};
+    if (payload.email !== undefined) userPatch.email = payload.email;
+    if (payload.dateOfBirth !== undefined) userPatch.dateOfBirth = payload.dateOfBirth;
+    await User.findByIdAndUpdate(userObjectId, userPatch);
+  }
+
   return result;
 };
 

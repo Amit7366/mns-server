@@ -6,3 +6,5 @@ dist
 .vercel
 *.md
 .github
+src/teleSalesLeads/teleSalesLeads.data.ts
+src/data/gameData.ts

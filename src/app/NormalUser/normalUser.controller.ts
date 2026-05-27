@@ -2,10 +2,17 @@ import httpStatus from 'http-status';
 
 import catchAsync from '../utilis/catchAsync';
 import sendResponse from '../utilis/sendResponse';
+import AppError from '../errors/AppError';
+import { USER_ROLE } from '../User/user.constant';
 import { NormalUserServices } from './normalUser.service';
 
 const getSingleNormalUser = catchAsync(async (req, res) => {
   const { id } = req.params;
+
+  if (req.user?.role === USER_ROLE.user && req.user.objectId !== id) {
+    throw new AppError(httpStatus.FORBIDDEN, 'You can only view your own profile');
+  }
+
   const result = await NormalUserServices.getSingleNormalUserFromDB(id);
 
   sendResponse(res, {
@@ -32,7 +39,10 @@ const updateNormalUser = catchAsync(async (req, res) => {
   const { userId } = req.params;
   const { normalUser } = req.body;
 
-  // Call the service to update the user
+  if (req.user?.role === USER_ROLE.user && req.user.objectId !== userId) {
+    throw new AppError(httpStatus.FORBIDDEN, 'You can only update your own profile');
+  }
+
   const result = await NormalUserServices.updateNormalUserIntoDB(userId, normalUser);
 
   sendResponse(res, {

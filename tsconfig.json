@@ -1,6 +1,12 @@
 {
   "include": ["src/**/*.ts", "src/**/*.d.ts"],
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules",
+    "src/teleSalesLeads/teleSalesLeads.data.ts",
+    "src/teleSalesLeads/seedTeleSalesLeads.ts",
+    "src/data/gameData.ts",
+    "src/scripts/seedGameCatalog.ts"
+  ],
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
