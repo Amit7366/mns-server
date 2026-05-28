@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { Counter } from './counter.model';
 import { User } from './user.model';
 
-const START_USER_ID = 47373; // Starting ID
+const START_USER_ID = 47700; // Starting ID
 
 // 🔒 Use atomic counter *with the caller's session* to avoid race conditions.
 //    Pass the mongoose session from createUserIntoDb:  await generateid(session)
@@ -15,7 +15,7 @@ export const generateUserId = async (session?: mongoose.ClientSession): Promise<
   );
 
   const numericId = START_USER_ID + (counter!.value - 1);
-  return `sbm${numericId}`;
+  return `bkb${numericId}`;
 };
 
 // ✅ Admin ID generation (unchanged)
